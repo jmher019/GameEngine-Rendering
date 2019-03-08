@@ -1,0 +1,93 @@
+Rendering Backend Project Document
+
+Scene:
+A distinct state of the game that is rendered for the user. It should present some interactive options to the user that should be self-explanatory.
+For example: rendering a character on a platform with a goal flag. The flag tells the player that the destination is the goal and therefore, the character can be moved to achieve that goal
+
+Scene Management:
+Global Game State is necessary to keep track of values that are necessary throughout each scene (such as player stats).
+Level State is necessary to transition from one scene to the next and for designing levels as a State Machine
+A n-ary Tree of objects that can be rendered in the screen to provide visual stimuli for the player.
+A character, object, or UI that the player can interact with.
+Collision Detection for rigidbodies and static meshes.
+Audio management in order to add to set the tone of a scene (in addition to the environment and asset design style).
+Animation management to breathe life into skeletal models.
+Custom Game Event streams in order to respond to actions from a player or AI in a state machine-like manner.
+AI management so that enemies can be simulated to the way that a programmer desires.
+
+
+
+
+Scene Object:
+MUST ALWAYS HAVE A Transform Component.
+The rest are optional components that are assigned to the scene object as needed. (Special cases of scene objects might already have some components assigned over others).
+
+Collision Object (extends Scene Object):
+Must also define physics and collision component.
+
+Static Mesh (extends Scene Object):
+must also define mesh component.
+
+Rigidbody (extends Scene Object):
+must also define physics, collision, mesh components.
+animation component is optional.
+
+Point Light (extends Scene Object):
+must also define light component.
+
+Directional Light (extends Scene Object):
+must also define light component.
+
+Spot Light:
+must also define light component.
+
+Area light:
+must also define light component.
+
+Camera:
+mesh and collision componets are optional.
+Can be set as a candidate for main camera.
+
+Many more specific scene objects.
+
+
+
+
+
+
+Components:
+Transform Component:
+
+Keeps track of an object's local and global translation, size, and rotation.
+Needs to be able to be copied so that objects that are copies cannot have a reference to the same transform component.
+Make it the reponsibility of objects using a transform component to make a copy of the transform component when making a copy of an object.
+Limit a game to 2^18 (262144) transform components.
+
+Collision Components (Box, Sphere, Capsule, or Convex 3d shape):
+
+contains information about collision geometry
+transform information is not kept here (it is kept in the transform component). Transform component and collsion component must be utilized together to perform proper collision tests.
+Can be a sphere, capsule, oriented bounding box, or any convex 3d shape.
+Limit a game to 2^18 (262144) transform components.
+
+Mesh Component:
+
+contains triangle information as well as triangle groups for skeletal animations.
+Used to render an object on the screen.
+Animation component can be used to dynamically move the triangles in the mesh component.
+Limit a game to 2^10 (1024) mesh components.
+
+Animation Component:
+
+A state machine which keeps track of how to animate a mesh component given a state
+Limit a game to 2^10 (1024) animation components
+
+Light component:
+
+Contains information about lighting. Can be used to light other objects. Maybe a moving firefly might have a collision component, a lighting component, and a mesh component
+Limit a game to 2^10 (1024) light components
+
+Physics Component:
+
+Contains information about mass, velocity, and acceleration.
+Limit a game to 2^18 (262144) physics components

@@ -1,0 +1,208 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\include\BoundingBoxComponent.hpp" />
+    <ClInclude Include="..\src\include\BoundingCapsuleComponent.hpp" />
+    <ClInclude Include="..\src\include\BoundingSphereComponent.hpp" />
+    <ClInclude Include="..\src\include\ColorComponent.hpp" />
+    <ClInclude Include="..\src\include\ForceGenerator.hpp" />
+    <ClInclude Include="..\src\include\ForceRegistry.hpp" />
+    <ClInclude Include="..\src\include\TextComponent.hpp" />
+    <ClInclude Include="..\src\include\SizeComponent.hpp" />
+    <ClInclude Include="..\src\include\Transform2D.hpp" />
+    <ClInclude Include="..\src\include\SceneGraph.hpp" />
+    <ClInclude Include="..\src\include\SceneObjectUtilities.hpp" />
+    <ClInclude Include="..\src\include\CollisionUtilities.hpp" />
+    <ClInclude Include="..\src\include\ComponentAllocators.hpp" />
+    <ClInclude Include="..\src\include\Contact.hpp" />
+    <ClInclude Include="..\src\include\DirectionalLightComponent.hpp" />
+    <ClInclude Include="..\src\include\GameGlobals.hpp" />
+    <ClInclude Include="..\src\include\GeometryConstants.hpp" />
+    <ClInclude Include="..\src\include\GeometryUtilities.hpp" />
+    <ClInclude Include="..\src\include\GPUShaderInterface.hpp" />
+    <ClInclude Include="..\src\include\LightComponent.hpp" />
+    <ClInclude Include="..\src\include\PhysicsComponent.hpp" />
+    <ClInclude Include="..\src\include\PointLightComponent.hpp" />
+    <ClInclude Include="..\src\include\Segment.hpp" />
+    <ClInclude Include="..\src\include\MeshComponent.hpp" />
+    <ClInclude Include="..\src\include\Plane.hpp" />
+    <ClInclude Include="..\src\include\GPUMeshComponentInterface.hpp" />
+    <ClInclude Include="..\src\include\SceneObject.hpp" />
+    <ClInclude Include="..\src\include\SpotLightComponent.hpp" />
+    <ClInclude Include="..\src\include\Transform.hpp" />
+    <ClInclude Include="..\src\include\Transform2DComponent.hpp" />
+    <ClInclude Include="..\src\include\TransformComponent.hpp" />
+    <ClInclude Include="..\src\include\Triangle.hpp" />
+    <ClInclude Include="..\src\include\UIObject.hpp" />
+    <ClInclude Include="..\src\include\Vertex.hpp" />
+    <ClInclude Include="..\src\include\VertexAttribDescription.hpp" />
+    <ClInclude Include="..\src\include\ZIndexComponent.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\sources\BoundingBoxComponent.cpp" />
+    <ClCompile Include="..\src\sources\BoundingCapsuleComponent.cpp" />
+    <ClCompile Include="..\src\sources\BoundingSphereComponent.cpp" />
+    <ClCompile Include="..\src\sources\CollisionUtilities.cpp" />
+    <ClCompile Include="..\src\sources\ColorComponent.cpp" />
+    <ClCompile Include="..\src\sources\DirectionalLightComponent.cpp" />
+    <ClCompile Include="..\src\sources\ForceGenerator.cpp" />
+    <ClCompile Include="..\src\sources\ForceRegistry.cpp" />
+    <ClCompile Include="..\src\sources\GameGlobals.cpp" />
+    <ClCompile Include="..\src\sources\GeometryUtilities.cpp" />
+    <ClCompile Include="..\src\sources\GPUMeshComponentInterface.cpp" />
+    <ClCompile Include="..\src\sources\GPUShaderInterface.cpp" />
+    <ClCompile Include="..\src\sources\LightComponent.cpp" />
+    <ClCompile Include="..\src\sources\MeshComponent.cpp" />
+    <ClCompile Include="..\src\sources\PhysicsComponent.cpp" />
+    <ClCompile Include="..\src\sources\Plane.cpp" />
+    <ClCompile Include="..\src\sources\PointLightComponent.cpp" />
+    <ClCompile Include="..\src\sources\SceneGraph.cpp" />
+    <ClCompile Include="..\src\sources\SceneObject.cpp" />
+    <ClCompile Include="..\src\sources\SceneObjectUtilitites.cpp" />
+    <ClCompile Include="..\src\sources\Segment.cpp" />
+    <ClCompile Include="..\src\sources\SizeComponent.cpp" />
+    <ClCompile Include="..\src\sources\SpotLightComponent.cpp" />
+    <ClCompile Include="..\src\sources\TextComponent.cpp" />
+    <ClCompile Include="..\src\sources\Transform.cpp" />
+    <ClCompile Include="..\src\sources\Transform2D.cpp" />
+    <ClCompile Include="..\src\sources\Transform2DComponent.cpp" />
+    <ClCompile Include="..\src\sources\TransformComponent.cpp" />
+    <ClCompile Include="..\src\sources\Triangle.cpp" />
+    <ClCompile Include="..\src\sources\UIObject.cpp" />
+    <ClCompile Include="..\src\sources\Vertex.cpp" />
+    <ClCompile Include="..\src\sources\ZIndexComponent.cpp" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{99721EB2-202E-4AEB-82ED-A0B4DEAEFEC9}</ProjectGuid>
+    <RootNamespace>RenderingBackend</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\src\include;$(ProjectDir)..\lib\glad\include;$(ProjectDir)..\lib\glm-0.9.9.0\glm;$(ProjectDir)..\lib\allocation\src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <PostBuildEvent>
+      <Command>copy $(ProjectDir)..\Debug\* $(ProjectDir)..\dist\lib\x86\Debug</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\src\include;$(ProjectDir)..\lib\glad\include;$(ProjectDir)..\lib\glm-0.9.9.0\glm;$(ProjectDir)..\lib\allocation\src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <PostBuildEvent>
+      <Command>copy $(ProjectDir)..\x64\Debug\* $(ProjectDir)..\dist\lib\x64\Debug</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\src\include;$(ProjectDir)..\lib\glad\include;$(ProjectDir)..\lib\glm-0.9.9.0\glm;$(ProjectDir)..\lib\allocation\src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy $(ProjectDir)..\Release\* $(ProjectDir)..\dist\lib\x86\Release</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\src\include;$(ProjectDir)..\lib\glad\include;$(ProjectDir)..\lib\glm-0.9.9.0\glm;$(ProjectDir)..\lib\allocation\src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy $(ProjectDir)..\x64\Release\* $(ProjectDir)..\dist\lib\x64\Release</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

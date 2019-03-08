@@ -1,0 +1,3 @@
+[submodule "lib/allocation"]
+	path = lib/allocation
+	url = https://github.com/jmher019/GameEngine-Allocation.git
