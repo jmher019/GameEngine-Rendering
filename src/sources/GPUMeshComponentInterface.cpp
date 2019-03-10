@@ -33,7 +33,13 @@ MeshComponentHandle GPUMeshComponentInterface::createMeshComponent(
 
     glBindVertexArray(0);
 
-    const MeshComponentHandle handle = MeshComponentAllocator::create(VAO, VBO, vertexCount, shader);
+    const MeshComponentHandle handle = MeshComponentAllocator::create();
+    MeshComponentAllocator::get(handle) = {
+        VAO,
+        VBO,
+        vertexCount,
+        shader
+    };
     loadedMeshComps.push_back(handle);
 
     return handle;
@@ -65,7 +71,13 @@ MeshComponentHandle GPUMeshComponentInterface::createDynamicMeshComponent(
 
     glBindVertexArray(0);
 
-    const MeshComponentHandle handle = MeshComponentAllocator::create(VAO, VBO, vertexCount, shader);
+    const MeshComponentHandle handle = MeshComponentAllocator::create();
+    MeshComponentAllocator::get(handle) = {
+        VAO,
+        VBO,
+        vertexCount,
+        shader
+    };
     loadedMeshComps.push_back(handle);
 
     return handle;

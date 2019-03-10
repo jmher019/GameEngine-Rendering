@@ -49,6 +49,18 @@
     <Filter Include="Source Files\Physics">
       <UniqueIdentifier>{ed088d5e-fef6-43e1-8c0b-ceda2df1c034}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\ModelParsing">
+      <UniqueIdentifier>{60c7535a-5a20-4c47-ba05-898b0791c8d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ModelParsing">
+      <UniqueIdentifier>{3b60dd2a-9111-4c12-bbba-cc0193917fed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utils">
+      <UniqueIdentifier>{61b09d1d-e3b4-4269-be93-c0eab5c02fc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utils">
+      <UniqueIdentifier>{b16a6c5b-32b8-4a38-baa9-6b2bfebd144b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\include\Vertex.hpp">
@@ -159,6 +171,15 @@
     <ClInclude Include="..\src\include\UIObject.hpp">
       <Filter>Header Files\UI</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\include\OBJParser.hpp">
+      <Filter>Header Files\ModelParsing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\include\StringUtils.hpp">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\include\PuggoModelParser.hpp">
+      <Filter>Header Files\ModelParsing</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\sources\BoundingBoxComponent.cpp">
@@ -255,6 +276,21 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\src\sources\Vertex.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\sources\OBJParsing.cpp">
+      <Filter>Source Files\ModelParsing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\sources\StringUtils.cpp">
+      <Filter>Source Files\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\sources\PuggoModelParser.cpp">
+      <Filter>Source Files\ModelParsing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\sources\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\glad\src\glad.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

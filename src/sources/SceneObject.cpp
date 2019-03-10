@@ -13,20 +13,13 @@ SceneObject::SceneObject(const SceneObject& sceneObject) {
 
     // Copy collision component
     if (BoundingBoxComponentAllocator::isValidHandle(sceneObject.boxCompHandle)) {
-        boxCompHandle = BoundingBoxComponentAllocator::create(
-            BoundingBoxComponentAllocator::get(sceneObject.boxCompHandle).getHalfExtents()
-        );
+        setBoundingBoxComponent(BoundingBoxComponentAllocator::get(sceneObject.boxCompHandle));
     }
     else if (BoundingCapsuleComponentAllocator::isValidHandle(sceneObject.capsuleCompHandle)) {
-        capsuleCompHandle = BoundingCapsuleComponentAllocator::create(
-            BoundingCapsuleComponentAllocator::get(sceneObject.capsuleCompHandle).getRadius(),
-            BoundingCapsuleComponentAllocator::get(sceneObject.capsuleCompHandle).getCapsuleCylinderLength()
-        );
+        setBoundingCapsuleComponent(BoundingCapsuleComponentAllocator::get(sceneObject.capsuleCompHandle));
     }
     else if (BoundingSphereComponentAllocator::isValidHandle(sceneObject.sphereCompHandle)) {
-        sphereCompHandle = BoundingSphereComponentAllocator::create(
-            BoundingSphereComponentAllocator::get(sceneObject.sphereCompHandle).getRadius()
-        );
+        setBoundingSphereComponent(BoundingSphereComponentAllocator::get(sceneObject.sphereCompHandle));
     }
 
     // Mesh component
@@ -34,26 +27,18 @@ SceneObject::SceneObject(const SceneObject& sceneObject) {
 
     // Light component
     if (PointLightComponentAllocator::isValidHandle(sceneObject.pointLightCompHandle)) {
-        pointLightCompHandle = PointLightComponentAllocator::create();
-        PointLightComponent& pointLightComponent = PointLightComponentAllocator::get(pointLightCompHandle);
-        pointLightComponent = PointLightComponentAllocator::get(sceneObject.pointLightCompHandle);
+        setPointLightComponent(PointLightComponentAllocator::get(sceneObject.pointLightCompHandle));
     }
     else if (DirectionalLightComponentAllocator::isValidHandle(sceneObject.directionalLightCompHandle)) {
-        directionalLightCompHandle = DirectionalLightComponentAllocator::create();
-        DirectionalLightComponent& directionalLightComponent = DirectionalLightComponentAllocator::get(directionalLightCompHandle);
-        directionalLightComponent = DirectionalLightComponentAllocator::get(sceneObject.directionalLightCompHandle);
+        setDirectionalLightComponent(DirectionalLightComponentAllocator::get(sceneObject.directionalLightCompHandle));
     }
     else if (SpotLightComponentAllocator::isValidHandle(sceneObject.spotLightCompHandle)) {
-        spotLightCompHandle = SpotLightComponentAllocator::create();
-        SpotLightComponent& spotLightComponent = SpotLightComponentAllocator::get(spotLightCompHandle);
-        spotLightComponent = SpotLightComponentAllocator::get(sceneObject.spotLightCompHandle);
+        setSpotLightComponent(SpotLightComponentAllocator::get(sceneObject.spotLightCompHandle));
     }
 
     // Physics component
     if (PhysicsComponentAllocator::isValidHandle(sceneObject.physicsCompHandle)) {
-        physicsCompHandle = PhysicsComponentAllocator::create();
-        PhysicsComponent& physicsComponent = PhysicsComponentAllocator::get(physicsCompHandle);
-        physicsComponent = PhysicsComponentAllocator::get(sceneObject.physicsCompHandle);
+        setPhysicsComponent(PhysicsComponentAllocator::get(sceneObject.physicsCompHandle));
     }
 }
 
@@ -110,23 +95,13 @@ SceneObject& SceneObject::operator=(const SceneObject& sceneObject) {
 
     // Copy collision component
     if (BoundingBoxComponentAllocator::isValidHandle(sceneObject.boxCompHandle)) {
-        BoundingBoxComponentHandle boxCompHandle = BoundingBoxComponentAllocator::create(
-            BoundingBoxComponentAllocator::get(sceneObject.boxCompHandle).getHalfExtents()
-        );
-        setBoxCompHandle(boxCompHandle);
+        setBoundingBoxComponent(BoundingBoxComponentAllocator::get(sceneObject.boxCompHandle));
     }
     else if (BoundingCapsuleComponentAllocator::isValidHandle(sceneObject.capsuleCompHandle)) {
-        BoundingCapsuleComponentHandle capsuleCompHandle = BoundingCapsuleComponentAllocator::create(
-            BoundingCapsuleComponentAllocator::get(sceneObject.capsuleCompHandle).getRadius(),
-            BoundingCapsuleComponentAllocator::get(sceneObject.capsuleCompHandle).getCapsuleCylinderLength()
-        );
-        setCapsuleCompHandle(capsuleCompHandle);
+        setBoundingCapsuleComponent(BoundingCapsuleComponentAllocator::get(sceneObject.capsuleCompHandle));
     }
     else if (BoundingSphereComponentAllocator::isValidHandle(sceneObject.sphereCompHandle)) {
-        BoundingSphereComponentHandle sphereCompHandle = BoundingSphereComponentAllocator::create(
-            BoundingSphereComponentAllocator::get(sceneObject.sphereCompHandle).getRadius()
-        );
-        setSphereCompHandle(sphereCompHandle);
+        setBoundingSphereComponent(BoundingSphereComponentAllocator::get(sceneObject.sphereCompHandle));
     }
 
     // Mesh component
@@ -134,31 +109,18 @@ SceneObject& SceneObject::operator=(const SceneObject& sceneObject) {
 
     // Light component
     if (PointLightComponentAllocator::isValidHandle(sceneObject.pointLightCompHandle)) {
-        PointLightComponentHandle pointLightCompHandle = PointLightComponentAllocator::create();
-        PointLightComponent& pointLightComponent = PointLightComponentAllocator::get(pointLightCompHandle);
-        pointLightComponent = PointLightComponentAllocator::get(sceneObject.pointLightCompHandle);
-        setPointLightCompHandle(pointLightCompHandle);
+        setPointLightComponent(PointLightComponentAllocator::get(sceneObject.pointLightCompHandle));
     }
     else if (DirectionalLightComponentAllocator::isValidHandle(sceneObject.directionalLightCompHandle)) {
-        DirectionalLightComponentHandle directionLightCompHandle = DirectionalLightComponentAllocator::create();
-        DirectionalLightComponent& directionalLightComponent = DirectionalLightComponentAllocator::get(directionLightCompHandle);
-        directionalLightComponent = DirectionalLightComponentAllocator::get(sceneObject.directionalLightCompHandle);
-        setDirectionalLightCompHandle(directionLightCompHandle);
+        setDirectionalLightComponent(DirectionalLightComponentAllocator::get(sceneObject.directionalLightCompHandle));
     }
     else if (SpotLightComponentAllocator::isValidHandle(sceneObject.spotLightCompHandle)) {
-        SpotLightComponentHandle spotLightCompHandle = SpotLightComponentAllocator::create();
-        SpotLightComponent& spotLightComponent = SpotLightComponentAllocator::get(spotLightCompHandle);
-        spotLightComponent = SpotLightComponentAllocator::get(sceneObject.spotLightCompHandle);
-        setSpotLightCompHandle(spotLightCompHandle);
+        setSpotLightComponent(SpotLightComponentAllocator::get(sceneObject.spotLightCompHandle));
     }
 
     // Physics component
     if (PhysicsComponentAllocator::isValidHandle(sceneObject.physicsCompHandle)) {
-        if (!PhysicsComponentAllocator::isValidHandle(physicsCompHandle)) {
-            physicsCompHandle = PhysicsComponentAllocator::create();
-        }
-        PhysicsComponent& physicsComponent = PhysicsComponentAllocator::get(physicsCompHandle);
-        physicsComponent = PhysicsComponentAllocator::get(sceneObject.physicsCompHandle);
+        setPhysicsComponent(PhysicsComponentAllocator::get(sceneObject.physicsCompHandle));
     }
 
     return *this;
@@ -413,7 +375,7 @@ void SceneObject::setTransformComponent(const TransformComponent& transformCompo
 
 void SceneObject::setBoundingBoxComponent(const BoundingBoxComponent& boundingBoxComponent) noexcept {
     if (!BoundingBoxComponentAllocator::isValidHandle(getBoxCompHandle())) {
-        boxCompHandle = BoundingBoxComponentAllocator::create(vec3());
+        boxCompHandle = BoundingBoxComponentAllocator::create();
     }
 
     BoundingBoxComponentAllocator::get(getBoxCompHandle()) = boundingBoxComponent;
@@ -421,7 +383,7 @@ void SceneObject::setBoundingBoxComponent(const BoundingBoxComponent& boundingBo
 
 void SceneObject::setBoundingCapsuleComponent(const BoundingCapsuleComponent& boundingCapsuleComponent) noexcept {
     if (!BoundingCapsuleComponentAllocator::isValidHandle(getCapsuleCompHandle())) {
-        capsuleCompHandle = BoundingCapsuleComponentAllocator::create(0.f, 0.f);
+        capsuleCompHandle = BoundingCapsuleComponentAllocator::create();
     }
 
     BoundingCapsuleComponentAllocator::get(getCapsuleCompHandle()) = boundingCapsuleComponent;
@@ -429,7 +391,7 @@ void SceneObject::setBoundingCapsuleComponent(const BoundingCapsuleComponent& bo
 
 void SceneObject::setBoundingSphereComponent(const BoundingSphereComponent& boundingSphereComponent) noexcept {
     if (!BoundingSphereComponentAllocator::isValidHandle(getSphereCompHandle())) {
-        sphereCompHandle = BoundingSphereComponentAllocator::create(0.f);
+        sphereCompHandle = BoundingSphereComponentAllocator::create();
     }
 
     BoundingSphereComponentAllocator::get(getSphereCompHandle()) = boundingSphereComponent;

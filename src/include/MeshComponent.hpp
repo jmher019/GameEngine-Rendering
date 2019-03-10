@@ -7,10 +7,10 @@ namespace puggo {
     class MeshComponent {
     public:
         MeshComponent(
-            const uint32_t& VAO,
-            const uint32_t& VBO,
-            const uint32_t& vertexCount,
-            const uint32_t& shader
+            const uint32_t& VAO = 0,
+            const uint32_t& VBO = 0,
+            const uint32_t& vertexCount = 0,
+            const uint32_t& shader = 0
         );
         MeshComponent(const MeshComponent& meshComponent) noexcept;
         MeshComponent(MeshComponent&& meshComponent) noexcept;

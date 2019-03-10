@@ -11,7 +11,7 @@ using namespace std;
 namespace puggo {
     class BoundingBoxComponent {
     public:
-        BoundingBoxComponent(const vec3& halfExtents);
+        BoundingBoxComponent(const vec3& halfExtents = vec3());
         BoundingBoxComponent(const BoundingBoxComponent& component);
         BoundingBoxComponent(BoundingBoxComponent&& component) noexcept;
 

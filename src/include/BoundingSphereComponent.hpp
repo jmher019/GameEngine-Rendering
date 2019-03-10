@@ -8,7 +8,7 @@ using namespace std;
 namespace puggo {
     class BoundingSphereComponent {
     public:
-        BoundingSphereComponent(const float& radius);
+        BoundingSphereComponent(const float& radius = 0.f);
         BoundingSphereComponent(const BoundingSphereComponent& sphere);
         BoundingSphereComponent(BoundingSphereComponent&& sphere) noexcept;
 

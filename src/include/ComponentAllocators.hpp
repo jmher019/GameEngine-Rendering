@@ -24,13 +24,13 @@ namespace puggo {
     using TransformComponentAllocator = GenericComponentAllocator<TransformComponent, 18, 14, TransformComponentHandle>;
 
     using BoundingBoxComponentHandle = GenericHandle<18, 14>;
-    using BoundingBoxComponentAllocator = GenericComponentAllocator<BoundingBoxComponent, 18, 14, BoundingBoxComponentHandle, const vec3&>;
+    using BoundingBoxComponentAllocator = GenericComponentAllocator<BoundingBoxComponent, 18, 14, BoundingBoxComponentHandle>;
 
     using BoundingCapsuleComponentHandle = GenericHandle<18, 14>;
-    using BoundingCapsuleComponentAllocator = GenericComponentAllocator<BoundingCapsuleComponent, 18, 14, BoundingCapsuleComponentHandle, const float&, const float&>;
+    using BoundingCapsuleComponentAllocator = GenericComponentAllocator<BoundingCapsuleComponent, 18, 14, BoundingCapsuleComponentHandle>;
 
     using BoundingSphereComponentHandle = GenericHandle<18, 14>;
-    using BoundingSphereComponentAllocator = GenericComponentAllocator<BoundingSphereComponent, 18, 14, BoundingSphereComponentHandle, const float&>;
+    using BoundingSphereComponentAllocator = GenericComponentAllocator<BoundingSphereComponent, 18, 14, BoundingSphereComponentHandle>;
 
     /*using AnimationComponentHandle = GenericHandle<10, 22>;
     using AnimationComponentAllocator = GenericComponentAllocator<AnimationComponent, 10, 22, AnimationComponentHandle>;*/
@@ -49,7 +49,7 @@ namespace puggo {
     
     // SceneObject/UIObject Components
     using MeshComponentHandle = GenericHandle<10, 22>;
-    using MeshComponentAllocator = GenericComponentAllocator<MeshComponent, 10, 22, MeshComponentHandle, const uint32_t&, const uint32_t&, const uint32_t&, const uint32_t&>;
+    using MeshComponentAllocator = GenericComponentAllocator<MeshComponent, 10, 22, MeshComponentHandle>;
     
     // UIObject Specific Components
     using ColorComponentHandle = GenericHandle<18, 14>;

@@ -2,6 +2,10 @@
 
 using namespace puggo;
 
+mat4 GameGlobals::projection = mat4(1.f);
+mat4 GameGlobals::view = mat4(1.f);
+mat4 GameGlobals::uiProjection = mat4(1.f);
+
 GameGlobals::GameGlobals(void) noexcept {}
 
 const mat4& GameGlobals::getProjection(void) noexcept {

@@ -9,7 +9,7 @@
 namespace puggo {
     class BoundingCapsuleComponent {
     public:
-        BoundingCapsuleComponent(const float& radius, const float& capsuleCylinderLength);
+        BoundingCapsuleComponent(const float& radius = 0.f, const float& capsuleCylinderLength = 0.f);
         BoundingCapsuleComponent(const BoundingCapsuleComponent& sphere);
         BoundingCapsuleComponent(BoundingCapsuleComponent&& sphere) noexcept;
 
