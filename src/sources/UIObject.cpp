@@ -3,30 +3,20 @@
 using namespace puggo;
 
 UIObject::UIObject(void) {
-    colorCompHandle = ColorComponentAllocator::create();
-    sizeCompHandle = SizeComponentAllocator::create();
-    textCompHandle = TextComponentAllocator::create();
-    transform2DCompHandle = Transform2DComponentAllocator::create();
-    zIndexCompHandle = ZIndexComponentAllocator::create();
+    setColorComponent({});
+    setSizeComponent({});
+    setTextComponent({});
+    setTransform2DComponent({});
+    setZIndexComponent({});
 }
 
 UIObject::UIObject(const UIObject& uiObject) {
-    colorCompHandle = ColorComponentAllocator::create();
-    ColorComponentAllocator::get(colorCompHandle) = ColorComponentAllocator::get(uiObject.getColorCompHandle());
-
-    sizeCompHandle = SizeComponentAllocator::create();
-    SizeComponentAllocator::get(sizeCompHandle) = SizeComponentAllocator::get(uiObject.getSizeCompHandle());
-
-    textCompHandle = TextComponentAllocator::create();
-    TextComponentAllocator::get(textCompHandle) = TextComponentAllocator::get(uiObject.getTextCompHandle());
-
-    transform2DCompHandle = Transform2DComponentAllocator::create();
-    Transform2DComponentAllocator::get(transform2DCompHandle) = Transform2DComponentAllocator::get(uiObject.getTransform2DCompHandle());
-
-    zIndexCompHandle = ZIndexComponentAllocator::create();
-    ZIndexComponentAllocator::get(zIndexCompHandle) = ZIndexComponentAllocator::get(uiObject.getZIndexCompHandle());
-
-    meshCompHandle = uiObject.getMeshCompHandle();
+    setColorComponent(*uiObject.getColorComponent());
+    setSizeComponent(*uiObject.getSizeComponent());
+    setTextComponent(*uiObject.getTextComponent());
+    setTransform2DComponent(*uiObject.getTransform2DComponent());
+    setZIndexComponent(*uiObject.getZIndexComponent());
+    setMeshCompHandle(uiObject.getMeshCompHandle());
 }
 
 UIObject::UIObject(UIObject&& uiObject) noexcept {
@@ -36,7 +26,7 @@ UIObject::UIObject(UIObject&& uiObject) noexcept {
     swap(transform2DCompHandle, uiObject.transform2DCompHandle);
     swap(zIndexCompHandle, uiObject.zIndexCompHandle);
     
-    meshCompHandle = uiObject.getMeshCompHandle();
+    setMeshCompHandle(uiObject.getMeshCompHandle());
 }
 
 UIObject::~UIObject(void) {
@@ -64,12 +54,12 @@ UIObject::~UIObject(void) {
 }
 
 UIObject& UIObject::operator=(const UIObject& uiObject) {
-    ColorComponentAllocator::get(colorCompHandle) = ColorComponentAllocator::get(uiObject.getColorCompHandle());
-    SizeComponentAllocator::get(sizeCompHandle) = SizeComponentAllocator::get(uiObject.getSizeCompHandle());
-    TextComponentAllocator::get(textCompHandle) = TextComponentAllocator::get(uiObject.getTextCompHandle());
-    Transform2DComponentAllocator::get(transform2DCompHandle) = Transform2DComponentAllocator::get(uiObject.getTransform2DCompHandle());
-    ZIndexComponentAllocator::get(zIndexCompHandle) = ZIndexComponentAllocator::get(uiObject.getZIndexCompHandle());
-    meshCompHandle = uiObject.getMeshCompHandle();
+    setColorComponent(*uiObject.getColorComponent());
+    setSizeComponent(*uiObject.getSizeComponent());
+    setTextComponent(*uiObject.getTextComponent());
+    setTransform2DComponent(*uiObject.getTransform2DComponent());
+    setZIndexComponent(*uiObject.getZIndexComponent());
+    setMeshCompHandle(uiObject.getMeshCompHandle());
 
     return *this;
 }
@@ -109,48 +99,96 @@ const MeshComponentHandle& UIObject::getMeshCompHandle(void) const noexcept {
     return meshCompHandle;
 }
 
-void UIObject::setColorCompHandle(const ColorComponentHandle& colorCompHandle) noexcept {
-    if (ColorComponentAllocator::isValidHandle(this->colorCompHandle)) {
-        ColorComponentAllocator::destroy(this->colorCompHandle);
-    }
-
-    this->colorCompHandle = colorCompHandle;
-}
-
-void UIObject::setSizeCompHandle(const SizeComponentHandle& sizeCompHandle) noexcept {
-    if (SizeComponentAllocator::isValidHandle(this->sizeCompHandle)) {
-        SizeComponentAllocator::destroy(this->sizeCompHandle);
-    }
-
-    this->sizeCompHandle = sizeCompHandle;
-}
-
-void UIObject::setTextCompHandle(const TextComponentHandle& textCompHandle) noexcept {
-    if (TextComponentAllocator::isValidHandle(this->textCompHandle)) {
-        TextComponentAllocator::destroy(this->textCompHandle);
-    }
-
-    this->textCompHandle = textCompHandle;
-}
-
-void UIObject::setTransform2DCompHandle(const Transform2DComponentHandle& transform2DCompHandle) noexcept {
-    if (Transform2DComponentAllocator::isValidHandle(this->transform2DCompHandle)) {
-        Transform2DComponentAllocator::destroy(this->transform2DCompHandle);
-    }
-
-    this->transform2DCompHandle = transform2DCompHandle;
-}
-
-void UIObject::setZIndexCompHandle(const ZIndexComponentHandle& zIndexCompHandle) noexcept {
-    if (ZIndexComponentAllocator::isValidHandle(this->zIndexCompHandle)) {
-        ZIndexComponentAllocator::destroy(this->zIndexCompHandle);
-    }
-
-    this->zIndexCompHandle = zIndexCompHandle;
-}
-
 void UIObject::setMeshCompHandle(const MeshComponentHandle& meshCompHandle) noexcept {
     this->meshCompHandle = meshCompHandle;
+}
+
+ColorComponent* UIObject::getColorComponent(void) const noexcept {
+    if (ColorComponentAllocator::isValidHandle(colorCompHandle)) {
+        return &ColorComponentAllocator::get(colorCompHandle);
+    }
+
+    return nullptr;
+}
+
+SizeComponent* UIObject::getSizeComponent(void) const noexcept {
+    if (SizeComponentAllocator::isValidHandle(sizeCompHandle)) {
+        return &SizeComponentAllocator::get(sizeCompHandle);
+    }
+
+    return nullptr;
+}
+
+TextComponent* UIObject::getTextComponent(void) const noexcept {
+    if (TextComponentAllocator::isValidHandle(textCompHandle)) {
+        return &TextComponentAllocator::get(textCompHandle);
+    }
+
+    return nullptr;
+}
+
+Transform2DComponent* UIObject::getTransform2DComponent(void) const noexcept {
+    if (Transform2DComponentAllocator::isValidHandle(transform2DCompHandle)) {
+        return &Transform2DComponentAllocator::get(transform2DCompHandle);
+    }
+
+    return nullptr;
+}
+
+ZIndexComponent* UIObject::getZIndexComponent(void) const noexcept {
+    if (ZIndexComponentAllocator::isValidHandle(zIndexCompHandle)) {
+        return &ZIndexComponentAllocator::get(zIndexCompHandle);
+    }
+
+    return nullptr;
+}
+
+MeshComponent* UIObject::getMeshComponent(void) const noexcept {
+    if (MeshComponentAllocator::isValidHandle(meshCompHandle)) {
+        return &MeshComponentAllocator::get(meshCompHandle);
+    }
+
+    return nullptr;
+}
+
+void UIObject::setColorComponent(const ColorComponent& colorComponent) noexcept {
+    if (!ColorComponentAllocator::isValidHandle(colorCompHandle)) {
+        colorCompHandle = ColorComponentAllocator::create();
+    }
+
+    ColorComponentAllocator::get(colorCompHandle) = colorComponent;
+}
+
+void UIObject::setSizeComponent(const SizeComponent& sizeComponent) noexcept {
+    if (!SizeComponentAllocator::isValidHandle(sizeCompHandle)) {
+        sizeCompHandle = SizeComponentAllocator::create();
+    }
+
+    SizeComponentAllocator::get(sizeCompHandle) = sizeComponent;
+}
+
+void UIObject::setTextComponent(const TextComponent& textComponent) noexcept {
+    if (!TextComponentAllocator::isValidHandle(textCompHandle)) {
+        textCompHandle = TextComponentAllocator::create();
+    }
+
+    TextComponentAllocator::get(textCompHandle) = textComponent;
+}
+
+void UIObject::setTransform2DComponent(const Transform2DComponent& transform2DComponent) noexcept {
+    if (!Transform2DComponentAllocator::isValidHandle(transform2DCompHandle)) {
+        transform2DCompHandle = Transform2DComponentAllocator::create();
+    }
+
+    Transform2DComponentAllocator::get(transform2DCompHandle) = transform2DComponent;
+}
+
+void UIObject::setZIndexComponent(const ZIndexComponent& zIndexComponent) noexcept {
+    if (!ZIndexComponentAllocator::isValidHandle(zIndexCompHandle)) {
+        zIndexCompHandle = ZIndexComponentAllocator::create();
+    }
+
+    ZIndexComponentAllocator::get(zIndexCompHandle) = zIndexComponent;
 }
 
 vector<Vertex> puggo::computeVertices(const UIObject& uiObject) noexcept {

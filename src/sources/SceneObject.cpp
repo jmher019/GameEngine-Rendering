@@ -2,8 +2,9 @@
 
 using namespace puggo;
 
-SceneObject::SceneObject(void):
-    transformCompHandle(TransformComponentAllocator::create()) {}
+SceneObject::SceneObject(void) {
+    setTransformComponent(TransformComponent());
+}
 
 SceneObject::SceneObject(const SceneObject& sceneObject) {
     // Copy transform component
@@ -56,7 +57,9 @@ SceneObject::SceneObject(SceneObject&& sceneObject) noexcept {
 
 SceneObject::~SceneObject(void) {
     // Destroy transform component so that another scene object may be able to use it
-    TransformComponentAllocator::destroy(transformCompHandle);
+    if (TransformComponentAllocator::isValidHandle(transformCompHandle)) {
+        TransformComponentAllocator::destroy(transformCompHandle);
+    }
 
     // Destroy collision component so that another scene object may be able to use it
     if (BoundingBoxComponentAllocator::isValidHandle(boxCompHandle)) {
@@ -90,37 +93,36 @@ SceneObject::~SceneObject(void) {
 
 SceneObject& SceneObject::operator=(const SceneObject& sceneObject) {
     // Copy transform component
-    TransformComponent& transformComp = TransformComponentAllocator::get(transformCompHandle);
-    transformComp = TransformComponentAllocator::get(sceneObject.transformCompHandle);
+    setTransformComponent(*sceneObject.getTransformComponent());
 
     // Copy collision component
-    if (BoundingBoxComponentAllocator::isValidHandle(sceneObject.boxCompHandle)) {
-        setBoundingBoxComponent(BoundingBoxComponentAllocator::get(sceneObject.boxCompHandle));
+    if (BoundingBoxComponent* bbox = sceneObject.getBoundingBoxComponent()) {
+        setBoundingBoxComponent(*bbox);
     }
-    else if (BoundingCapsuleComponentAllocator::isValidHandle(sceneObject.capsuleCompHandle)) {
-        setBoundingCapsuleComponent(BoundingCapsuleComponentAllocator::get(sceneObject.capsuleCompHandle));
+    else if (BoundingCapsuleComponent* bCapsule = sceneObject.getBoundingCapsuleComponent()) {
+        setBoundingCapsuleComponent(*bCapsule);
     }
-    else if (BoundingSphereComponentAllocator::isValidHandle(sceneObject.sphereCompHandle)) {
-        setBoundingSphereComponent(BoundingSphereComponentAllocator::get(sceneObject.sphereCompHandle));
+    else if (BoundingSphereComponent* bSphere = sceneObject.getBoundingSphereComponent()) {
+        setBoundingSphereComponent(*bSphere);
     }
 
     // Mesh component
-    meshCompHandle = sceneObject.meshCompHandle;
+    setMeshCompHandle(sceneObject.getMeshCompHandle());
 
     // Light component
-    if (PointLightComponentAllocator::isValidHandle(sceneObject.pointLightCompHandle)) {
-        setPointLightComponent(PointLightComponentAllocator::get(sceneObject.pointLightCompHandle));
+    if (PointLightComponent* pointLight = sceneObject.getPointLightComponent()) {
+        setPointLightComponent(*pointLight);
     }
-    else if (DirectionalLightComponentAllocator::isValidHandle(sceneObject.directionalLightCompHandle)) {
-        setDirectionalLightComponent(DirectionalLightComponentAllocator::get(sceneObject.directionalLightCompHandle));
+    else if (DirectionalLightComponent* directionalLight = sceneObject.getDirectionalLightComponent()) {
+        setDirectionalLightComponent(*directionalLight);
     }
-    else if (SpotLightComponentAllocator::isValidHandle(sceneObject.spotLightCompHandle)) {
-        setSpotLightComponent(SpotLightComponentAllocator::get(sceneObject.spotLightCompHandle));
+    else if (SpotLightComponent* spotLight = sceneObject.getSpotLightComponent()) {
+        setSpotLightComponent(*spotLight);
     }
 
     // Physics component
-    if (PhysicsComponentAllocator::isValidHandle(sceneObject.physicsCompHandle)) {
-        setPhysicsComponent(PhysicsComponentAllocator::get(sceneObject.physicsCompHandle));
+    if (PhysicsComponent* physics = sceneObject.getPhysicsComponent()) {
+        setPhysicsComponent(*physics);
     }
 
     return *this;
@@ -188,109 +190,9 @@ const PhysicsComponentHandle& SceneObject::getPhysicsCompHandle(void) const noex
     return physicsCompHandle;
 }
 
-void SceneObject::setTransformCompHandle(const TransformComponentHandle& transformCompHandle) noexcept {
-    if (TransformComponentAllocator::isValidHandle(this->transformCompHandle)) {
-        TransformComponentAllocator::destroy(this->transformCompHandle);
-    }
-
-    this->transformCompHandle = transformCompHandle;
-}
-
-void SceneObject::setBoxCompHandle(const BoundingBoxComponentHandle& boxCompHandle) noexcept {
-    if (BoundingBoxComponentAllocator::isValidHandle(this->boxCompHandle)) {
-        BoundingBoxComponentAllocator::destroy(this->boxCompHandle);
-    }
-    else if (BoundingCapsuleComponentAllocator::isValidHandle(this->capsuleCompHandle)) {
-        BoundingCapsuleComponentAllocator::destroy(this->capsuleCompHandle);
-    }
-    else if (BoundingSphereComponentAllocator::isValidHandle(this->sphereCompHandle)) {
-        BoundingSphereComponentAllocator::destroy(this->sphereCompHandle);
-    }
-
-    this->boxCompHandle = boxCompHandle;
-}
-
-void SceneObject::setCapsuleCompHandle(const BoundingCapsuleComponentHandle& capsuleCompHandle) noexcept {
-    if (BoundingBoxComponentAllocator::isValidHandle(this->boxCompHandle)) {
-        BoundingBoxComponentAllocator::destroy(this->boxCompHandle);
-    }
-    else if (BoundingCapsuleComponentAllocator::isValidHandle(this->capsuleCompHandle)) {
-        BoundingCapsuleComponentAllocator::destroy(this->capsuleCompHandle);
-    }
-    else if (BoundingSphereComponentAllocator::isValidHandle(this->sphereCompHandle)) {
-        BoundingSphereComponentAllocator::destroy(this->sphereCompHandle);
-    }
-
-    this->capsuleCompHandle = capsuleCompHandle;
-}
-
-void SceneObject::setSphereCompHandle(const BoundingSphereComponentHandle& sphereCompHandle) noexcept {
-    if (BoundingBoxComponentAllocator::isValidHandle(this->boxCompHandle)) {
-        BoundingBoxComponentAllocator::destroy(this->boxCompHandle);
-    }
-    else if (BoundingCapsuleComponentAllocator::isValidHandle(this->capsuleCompHandle)) {
-        BoundingCapsuleComponentAllocator::destroy(this->capsuleCompHandle);
-    }
-    else if (BoundingSphereComponentAllocator::isValidHandle(this->sphereCompHandle)) {
-        BoundingSphereComponentAllocator::destroy(this->sphereCompHandle);
-    }
-
-    this->sphereCompHandle = sphereCompHandle;
-}
-
 void SceneObject::setMeshCompHandle(const MeshComponentHandle& meshCompHandle) noexcept {
     // Mesh components are destroyed elsewhere
     this->meshCompHandle = meshCompHandle;
-}
-
-void SceneObject::setPointLightCompHandle(const PointLightComponentHandle& pointLightCompHandle) noexcept {
-    if (PointLightComponentAllocator::isValidHandle(this->pointLightCompHandle)) {
-        PointLightComponentAllocator::destroy(this->pointLightCompHandle);
-    }
-    else if (DirectionalLightComponentAllocator::isValidHandle(this->directionalLightCompHandle)) {
-        DirectionalLightComponentAllocator::destroy(this->directionalLightCompHandle);
-    }
-    else if (SpotLightComponentAllocator::isValidHandle(this->spotLightCompHandle)) {
-        SpotLightComponentAllocator::destroy(this->spotLightCompHandle);
-    }
-    
-    this->pointLightCompHandle = pointLightCompHandle;
-}
-
-void SceneObject::setDirectionalLightCompHandle(const DirectionalLightComponentHandle& directionalLightCompHandle) noexcept {
-    if (PointLightComponentAllocator::isValidHandle(this->pointLightCompHandle)) {
-        PointLightComponentAllocator::destroy(this->pointLightCompHandle);
-    }
-    else if (DirectionalLightComponentAllocator::isValidHandle(this->directionalLightCompHandle)) {
-        DirectionalLightComponentAllocator::destroy(this->directionalLightCompHandle);
-    }
-    else if (SpotLightComponentAllocator::isValidHandle(this->spotLightCompHandle)) {
-        SpotLightComponentAllocator::destroy(this->spotLightCompHandle);
-    }
-
-    this->directionalLightCompHandle = directionalLightCompHandle;
-}
-
-void SceneObject::setSpotLightCompHandle(const SpotLightComponentHandle& spotLightCompHandle) noexcept {
-    if (PointLightComponentAllocator::isValidHandle(this->pointLightCompHandle)) {
-        PointLightComponentAllocator::destroy(this->pointLightCompHandle);
-    }
-    else if (DirectionalLightComponentAllocator::isValidHandle(this->directionalLightCompHandle)) {
-        DirectionalLightComponentAllocator::destroy(this->directionalLightCompHandle);
-    }
-    else if (SpotLightComponentAllocator::isValidHandle(this->spotLightCompHandle)) {
-        SpotLightComponentAllocator::destroy(this->spotLightCompHandle);
-    }
-
-    this->spotLightCompHandle = spotLightCompHandle;
-}
-
-void SceneObject::setPhyicsCompHandle(const PhysicsComponentHandle& physicsCompHandle) noexcept {
-    if (PhysicsComponentAllocator::isValidHandle(this->physicsCompHandle)) {
-        PhysicsComponentAllocator::destroy(this->physicsCompHandle);
-    }
-
-    this->physicsCompHandle = physicsCompHandle;
 }
 
 TransformComponent* SceneObject::getTransformComponent(void) const noexcept {
@@ -376,6 +278,13 @@ void SceneObject::setTransformComponent(const TransformComponent& transformCompo
 void SceneObject::setBoundingBoxComponent(const BoundingBoxComponent& boundingBoxComponent) noexcept {
     if (!BoundingBoxComponentAllocator::isValidHandle(getBoxCompHandle())) {
         boxCompHandle = BoundingBoxComponentAllocator::create();
+    
+        if (BoundingCapsuleComponentAllocator::isValidHandle(getCapsuleCompHandle())) {
+            BoundingCapsuleComponentAllocator::destroy(getCapsuleCompHandle());
+        }
+        else if (BoundingSphereComponentAllocator::isValidHandle(getSphereCompHandle())) {
+            BoundingSphereComponentAllocator::destroy(getSphereCompHandle());
+        }
     }
 
     BoundingBoxComponentAllocator::get(getBoxCompHandle()) = boundingBoxComponent;
@@ -384,6 +293,13 @@ void SceneObject::setBoundingBoxComponent(const BoundingBoxComponent& boundingBo
 void SceneObject::setBoundingCapsuleComponent(const BoundingCapsuleComponent& boundingCapsuleComponent) noexcept {
     if (!BoundingCapsuleComponentAllocator::isValidHandle(getCapsuleCompHandle())) {
         capsuleCompHandle = BoundingCapsuleComponentAllocator::create();
+    
+        if (BoundingBoxComponentAllocator::isValidHandle(getBoxCompHandle())) {
+            BoundingBoxComponentAllocator::destroy(getBoxCompHandle());
+        }
+        else if (BoundingSphereComponentAllocator::isValidHandle(getSphereCompHandle())) {
+            BoundingSphereComponentAllocator::destroy(getSphereCompHandle());
+        }
     }
 
     BoundingCapsuleComponentAllocator::get(getCapsuleCompHandle()) = boundingCapsuleComponent;
@@ -392,6 +308,13 @@ void SceneObject::setBoundingCapsuleComponent(const BoundingCapsuleComponent& bo
 void SceneObject::setBoundingSphereComponent(const BoundingSphereComponent& boundingSphereComponent) noexcept {
     if (!BoundingSphereComponentAllocator::isValidHandle(getSphereCompHandle())) {
         sphereCompHandle = BoundingSphereComponentAllocator::create();
+    
+        if (BoundingBoxComponentAllocator::isValidHandle(getBoxCompHandle())) {
+            BoundingBoxComponentAllocator::destroy(getBoxCompHandle());
+        }
+        else if (BoundingCapsuleComponentAllocator::isValidHandle(getCapsuleCompHandle())) {
+            BoundingCapsuleComponentAllocator::destroy(getCapsuleCompHandle());
+        }
     }
 
     BoundingSphereComponentAllocator::get(getSphereCompHandle()) = boundingSphereComponent;
@@ -400,6 +323,13 @@ void SceneObject::setBoundingSphereComponent(const BoundingSphereComponent& boun
 void SceneObject::setPointLightComponent(const PointLightComponent& pointLightComponent) noexcept {
     if (!PointLightComponentAllocator::isValidHandle(getPointLightCompHandle())) {
         pointLightCompHandle = PointLightComponentAllocator::create();
+
+        if (DirectionalLightComponentAllocator::isValidHandle(getDirectionalLightCompHandle())) {
+            DirectionalLightComponentAllocator::destroy(getDirectionalLightCompHandle());
+        }
+        else if (SpotLightComponentAllocator::isValidHandle(getSpotLightCompHandle())) {
+            SpotLightComponentAllocator::destroy(getSpotLightCompHandle());
+        }
     }
 
     PointLightComponentAllocator::get(getPointLightCompHandle()) = pointLightComponent;
@@ -408,6 +338,13 @@ void SceneObject::setPointLightComponent(const PointLightComponent& pointLightCo
 void SceneObject::setDirectionalLightComponent(const DirectionalLightComponent& directionalLightComponent) noexcept {
     if (!DirectionalLightComponentAllocator::isValidHandle(getDirectionalLightCompHandle())) {
         directionalLightCompHandle = DirectionalLightComponentAllocator::create();
+
+        if (PointLightComponentAllocator::isValidHandle(getPointLightCompHandle())) {
+            PointLightComponentAllocator::destroy(getPointLightCompHandle());
+        }
+        else if (SpotLightComponentAllocator::isValidHandle(getSpotLightCompHandle())) {
+            SpotLightComponentAllocator::destroy(getSpotLightCompHandle());
+        }
     }
 
     DirectionalLightComponentAllocator::get(getDirectionalLightCompHandle()) = directionalLightComponent;
@@ -416,6 +353,13 @@ void SceneObject::setDirectionalLightComponent(const DirectionalLightComponent& 
 void SceneObject::setSpotLightComponent(const SpotLightComponent& spotLightComponent) noexcept {
     if (!SpotLightComponentAllocator::isValidHandle(getSpotLightCompHandle())) {
         spotLightCompHandle = SpotLightComponentAllocator::create();
+
+        if (DirectionalLightComponentAllocator::isValidHandle(getDirectionalLightCompHandle())) {
+            DirectionalLightComponentAllocator::destroy(getDirectionalLightCompHandle());
+        }
+        else if (PointLightComponentAllocator::isValidHandle(getPointLightCompHandle())) {
+            PointLightComponentAllocator::destroy(getPointLightCompHandle());
+        }
     }
 
     SpotLightComponentAllocator::get(getSpotLightCompHandle()) = spotLightComponent;

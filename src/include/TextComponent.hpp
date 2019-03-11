@@ -27,7 +27,9 @@ namespace puggo {
 
     struct TextComponent {
         float fontSize = 0.f;
-        string text = string("");
+        // text is commented out because there is a bug with creating a text component in this manner
+        // solution is to separate this out and create custom string components
+        //string text = string("");
         FontFamily fontFamily = FontFamily::ARIAL;
         TextAlign textAlign = TextAlign::LEFT;
         TextVerticalAlign textVerticalAlign = TextVerticalAlign::TOP;

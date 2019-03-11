@@ -25,15 +25,7 @@ namespace puggo {
         const SpotLightComponentHandle& getSpotLightCompHandle(void) const noexcept;
         const PhysicsComponentHandle& getPhysicsCompHandle(void) const noexcept;
 
-        void setTransformCompHandle(const TransformComponentHandle& transformCompHandle) noexcept;
-        void setBoxCompHandle(const BoundingBoxComponentHandle& boxCompHandle) noexcept;
-        void setCapsuleCompHandle(const BoundingCapsuleComponentHandle& capsuleCompHandle) noexcept;
-        void setSphereCompHandle(const BoundingSphereComponentHandle& sphereCompHandle) noexcept;
         void setMeshCompHandle(const MeshComponentHandle& meshCompHandle) noexcept;
-        void setPointLightCompHandle(const PointLightComponentHandle& pointLightCompHandle) noexcept;
-        void setDirectionalLightCompHandle(const DirectionalLightComponentHandle& directionalLightCompHandle) noexcept;
-        void setSpotLightCompHandle(const SpotLightComponentHandle& spotLightCompHandle) noexcept;
-        void setPhyicsCompHandle(const PhysicsComponentHandle& physicsCompHandle) noexcept;
 
         TransformComponent* getTransformComponent(void) const noexcept;
         BoundingBoxComponent* getBoundingBoxComponent(void) const noexcept;

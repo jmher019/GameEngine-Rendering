@@ -23,12 +23,20 @@ namespace puggo {
         const ZIndexComponentHandle& getZIndexCompHandle(void) const noexcept;
         const MeshComponentHandle& getMeshCompHandle(void) const noexcept;
 
-        void setColorCompHandle(const ColorComponentHandle& colorCompHandle) noexcept;
-        void setSizeCompHandle(const SizeComponentHandle& sizeCompHandle) noexcept;
-        void setTextCompHandle(const TextComponentHandle& textCompHandle) noexcept;
-        void setTransform2DCompHandle(const Transform2DComponentHandle& transform2DCompHandle) noexcept;
-        void setZIndexCompHandle(const ZIndexComponentHandle& zIndexCompHandle) noexcept;
         void setMeshCompHandle(const MeshComponentHandle& meshCompHandle) noexcept;
+
+        ColorComponent* getColorComponent(void) const noexcept;
+        SizeComponent* getSizeComponent(void) const noexcept;
+        TextComponent* getTextComponent(void) const noexcept;
+        Transform2DComponent* getTransform2DComponent(void) const noexcept;
+        ZIndexComponent* getZIndexComponent(void) const noexcept;
+        MeshComponent* getMeshComponent(void) const noexcept;
+
+        void setColorComponent(const ColorComponent& colorComponent) noexcept;
+        void setSizeComponent(const SizeComponent& sizeComponent) noexcept;
+        void setTextComponent(const TextComponent& textComponent) noexcept;
+        void setTransform2DComponent(const Transform2DComponent& transform2DComponent) noexcept;
+        void setZIndexComponent(const ZIndexComponent& zIndexComponent) noexcept;
 
     private:
         // Every UIObject has unique color, text, size, transform2D, and zindex components
